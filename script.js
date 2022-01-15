@@ -5,6 +5,7 @@ var secondButton = document.getElementById('choice_2');
 
 var questionClass = "question_container animate__animated animate__fadeInUp";
 var buttonClass = "response_container animate__animated animate__fadeInUp";
+var refreshButtonClass = "refresh_button animate__animated animate__fadeInUp";
 
 var previousButton1 = firstButton;
 
@@ -30,8 +31,11 @@ function randomNumExcept(except){
 //Disables previous 2 generated buttons
 function disableButtons(){
     var previousButtons = document.getElementsByClassName('response');
+    var refreshButton = document.getElementById('refresh_button');
+
     previousButtons[previousButtons.length - 1].disabled = true;
     previousButtons[previousButtons.length - 2].disabled = true;
+    if(refreshButton){ refreshButton.disabled = true; }
 }
 
 var answer = '';//records answer selected for each question
@@ -57,6 +61,16 @@ function createNewResponseButton(responseText, id){
     return newChoice;
 }
 
+function refreshChoices(){
+    var previousButtons = document.getElementsByClassName('response');
+    
+    var randomInt = getRandomInt(options2.length);
+    previousButtons[previousButtons.length - 1].textContent = options2[randomInt];
+    previousButtons[previousButtons.length - 2].textContent = options2[randomNumExcept(randomInt)];
+
+    console.log(previousButtons);
+}
+
 var questionNumber = 0;
 
 function showNextQuestion(){
@@ -65,7 +79,7 @@ function showNextQuestion(){
 
     //build up search query
     answer = this.innerText;
-    queryChoices = queryChoices.length > 0 ? queryChoices + "+" + answer : answer;
+    queryChoices = queryChoices.length > 0 ? answer + "+" + queryChoices : answer;
 
     //keep track of questions
     questionNumber++;
@@ -102,9 +116,18 @@ function showNextQuestion(){
         var choice2Text = options2[randomNumExcept(cuisineChoice)];
         var newChoice2 = createNewResponseButton(choice2Text, 'choice_2');
 
+        var refreshButton = document.createElement('button');
+        refreshButton.setAttribute('class', refreshButtonClass);
+        refreshButton.setAttribute('id', 'refresh_button');
+        var fa_refresh_button = document.createElement('i');
+        fa_refresh_button.setAttribute('class', 'fas fa-sync-alt');
+        fa_refresh_button.addEventListener('click', refreshChoices);
+        refreshButton.appendChild(fa_refresh_button);
+
         //append new button to button container
         newButtons.appendChild(newChoice1);
         newButtons.appendChild(newChoice2);
+        newButtons.appendChild(refreshButton);
 
 
         //append new question and response buttons to container

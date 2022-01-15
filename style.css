@@ -28,14 +28,6 @@ h1{
     color: white;
 }
 
-/*
-.question{
-    font-family: 'Nunito', sans-serif;
-    font-size: 200%;
-    color: white;
-}
-*/
-
 .response_container{
     /* display: flex; */
     /* justify-content: center; */
@@ -86,5 +78,23 @@ h1{
 
 #search_button{
     background-color: cyan;
-    /* color: whitesmoke */
+}
+
+.refresh_button{
+    /* display: inline; */
+    background-color: transparent;
+    border:none;
+    font-size: 1.5rem;
+    color:white;
+    position: absolute;
+    left: 40%;
+    bottom: 35%;
+}
+
+.refresh_button:hover{
+    cursor: pointer;
+}
+
+.refresh_button:active{
+    filter:opacity(75%);
 }
